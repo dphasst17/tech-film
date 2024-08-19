@@ -1,0 +1,103 @@
+/*
+
+BROWSER SCROLLBAR KITS
+
+*/
+
+/* CHROME & SAFARI */
+*::-webkit-scrollbar {
+    width: 0px; 
+  }
+  
+  *::-webkit-scrollbar-track {
+  background-color: transparent;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+  background: var(--wizard-yellow);
+  border-radius: 0px;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--wizard-blue);
+    border-radius: 0px;
+  }
+  
+  *::-webkit-scrollbar-thumb:active {
+    background: var(--wizard-navy-blue);
+    border-radius: 0px;
+  }
+  
+  /* MOZILLA FIREFOX */
+  *::-moz-scrollbar {
+    width: 0px; 
+  }
+  
+  *::-moz-scrollbar-track {
+    background-color: transparent;
+  }
+  
+  *::-moz-scrollbar-thumb {
+    background: var(--wizard-yellow);
+    border-radius: 0px;
+  }
+  
+  *::-moz-scrollbar-thumb:hover {
+    background: var(--wizard-blue);
+    border-radius: 0px;
+  }
+  
+  *::-moz-scrollbar-thumb:active {
+    background: var(--wizard-navy-blue);
+    border-radius: 0px;
+  }
+  
+  
+  /* MICROSOFT INTERNET EXPLORER */
+  *::-ms-scrollbar {
+    width: 0px; 
+  }
+  
+  *::-ms-scrollbar-track {
+  background-color: transparent;
+  }
+  
+  *::-ms-scrollbar-thumb {
+    background: var(--wizard-yellow);
+    border-radius: 0px;
+  }
+  
+  *::-ms-scrollbar-thumb:hover {
+    background: var(--wizard-blue);
+    border-radius: 0px;
+  }
+  
+  *::-ms-scrollbar-thumb:active {
+    background: var(--wizard-navy-blue);
+    border-radius: 0px;
+  }
+  
+  /* OPERA */
+  *::-o-scrollbar {
+    width: 0px; 
+  }
+  
+  *::-o-scrollbar-track {
+  background-color: transparent;
+  }
+  
+  *::-o-scrollbar-thumb {
+  background: var(--wizard-yellow);
+  border-radius: 0px;
+  }
+  
+  *::-o-scrollbar-thumb:hover {
+    background: var(--wizard-blue);
+    border-radius: 0px;
+  }
+  
+  *::-o-scrollbar-thumb:active {
+    background: var(--wizard-navy-blue);
+    border-radius: 0px;
+  }
+  
