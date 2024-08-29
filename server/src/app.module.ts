@@ -7,7 +7,7 @@ import { UserModule } from './api/user/user.module';
 import { AuthModule } from './api/auth/auth.module';
 import { FilmModule } from './api/film/film.module';
 import { TicketModule } from './api/ticket/ticket.module';
-import { JwtAuthMiddleware } from './middlewares/token.middleware';
+import { JwtAdminAuthMiddleware, JwtAuthMiddleware } from './middlewares/token.middleware';
 import { JwtModule } from '@nestjs/jwt';
 @Module({
   imports: [
@@ -34,5 +34,13 @@ export class AppModule {
         { path: 'api/token', method: RequestMethod.GET },
         { path: 'api/auth/token', method: RequestMethod.GET },
       );
+    consumer
+      .apply(JwtAdminAuthMiddleware)
+      .forRoutes(
+        { path: 'api/film', method: RequestMethod.POST },
+        { path: 'api/film/:id', method: RequestMethod.PUT },
+        { path: 'api/user/all', method: RequestMethod.GET },
+      )
   }
+
 }

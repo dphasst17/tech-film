@@ -57,8 +57,6 @@ export class AuthService {
             return { status: 404, message: 'Register failed' }
         }
         return { status: 201, message: 'Register success' }
-
-
     }
     async updateAuth(idUser: string, data: { [key: string]: string | number | boolean | any }) {
         const updated = await this.authService.findByIdAndUpdate({ idUser: idUser }, data)

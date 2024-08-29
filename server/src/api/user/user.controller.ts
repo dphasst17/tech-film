@@ -23,10 +23,10 @@ export class UserController {
         const update = await this.userService.update(idUser, data)
         return res.status(update.status).json(update);
     }
-    @Delete()
+    /* @Delete()
     async delete(@Request() req: RequestCustom, @Res() res: Response): Promise<Response> {
         const idUser = req.idUser
         const deleteData = await this.userService.delete(idUser)
         return res.status(deleteData.status).json(deleteData);
-    }
+    } */
 }

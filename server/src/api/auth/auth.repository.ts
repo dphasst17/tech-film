@@ -9,6 +9,9 @@ export class AuthRepository {
     private async changeAccount(idUser: string) {
         return await this.auth.findByIdAndDelete({ idUser: idUser }).exec()
     }
+    async isAdmin(idUser: string) {
+        return await this.auth.findOne({ idUser: idUser, role: { $in: [0, 1] } }).exec()
+    }
     async login(username: string) {
         return await this.auth.find({ username: username }).exec()
     }
