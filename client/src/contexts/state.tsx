@@ -10,7 +10,7 @@ export const StateProvider = ({ children }: { children: React.ReactNode }) => {
     const [timeFrame, setTimeFrame] = useState<number[]>([7, 9, 11, 13, 15, 17, 19, 21, 23])
     useEffect(() => {
         setIsLog(JSON.parse(get('filmlogs') || 'false'))
-        setRole(Number(JSON.parse(get('role') || '2')))
+        setRole(Number(JSON.parse(get('f-role') || '2')))
     }, [])
     return (
         <StateContext.Provider value={{

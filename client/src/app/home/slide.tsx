@@ -1,5 +1,4 @@
 'use client'
-import { StateContext } from "@/contexts/state";
 import { filmStore } from "@/store/film";
 import { formatDate } from "@/utils/util";
 import { useRouter } from "next/navigation";
@@ -25,9 +24,12 @@ const SlideShow = () => {
         <GrFormPrevious onClick={prev} className="absolute w-[40px] h-[40px] bg-zinc-600 text-white rounded-lg cursor-pointer z-30 left-10 md:left-20" />
         <div className="relative w-[90%] h-full flex flex-wrap items-end rounded-lg border border-solid border-zinc-300 overflow-hidden z-20">
             <div className="absolute w-full h-full z-10 bg-zinc-950 bg-opacity-50"></div>
-            {newFilm !== null && newFilm.slice(0, 4).map((c, i) => <img className={`${i === indexActive ? 'block' : 'hidden'} absolute w-full h-full object-cover animateShowItems z-0 transition-all`} src={c.background} key={`background-${c.id}`} />)}
             {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
-                <div className={`${i === indexActive ? 'flex' : 'hidden'} w-full h-2/4 overflow-hidden flex-wrap flex-col justify-center items-center content-center mb-4  rounded-lg z-10 transition-all`} key={`info-${c.id}`}>
+                <img className={`${i === indexActive ? 'block' : 'hidden'} absolute w-full h-full object-cover animateShowItems z-0 transition-all`} src={c.background} key={`${i}slide-background-${c.id}`} />)}
+            {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
+                <div
+                    className={`${i === indexActive ? 'flex' : 'hidden'} w-full h-2/4 overflow-hidden flex-wrap flex-col justify-center 
+                items-center content-center mb-4  rounded-lg z-10 transition-all`} key={`${i}slide-info-${c.id}`}>
                     <span
                         onClick={() => { router.push(`/film/detail/${c._id}/${c.title}`) }}
                         className="w-3/4 lg:w-2/4 2xl:w-full h-auto xl:max-h-[220px] flex items-center justify-center font-tech-shark text-7xl text-white rounded-lg text-center cursor-pointer">{c.title}</span>
@@ -37,7 +39,11 @@ const SlideShow = () => {
                 </div>
             )}
             <div className="w-full h-2/4 flex items-center justify-center p-1 z-20">
-                {newFilm !== null && newFilm.slice(0, 4).map((c, i) => <img onClick={() => { setIndexActive(i) }} className={`${i === indexActive ? 'w-[180px] h-[260px] border-[3px] border-solid border-red-600 rounded-lg' : 'w-[150px] h-[230px]'} mx-2 mb-4 transition-all z-10`} src={c.thumbnails} key={`thumb-${c.id}`} />)}
+                {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
+                    <img onClick={() => { setIndexActive(i) }}
+                        className={`${i === indexActive ? 'w-[180px] h-[260px] border-[3px] border-solid border-red-600 rounded-lg' : 'w-[150px] h-[230px]'} 
+                mx-2 mb-4 transition-all z-10`} src={c.thumbnails}
+                        key={`${i}slide-thumb-${c.id}`} />)}
             </div>
 
         </div>

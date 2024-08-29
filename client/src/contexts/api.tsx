@@ -13,8 +13,8 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     const { isLog, role } = use(StateContext)
     const { setUsers, setTicket } = userStore()
     const { setFilms, setNewFilm } = filmStore()
-    const { data: dataNewFilm, err: errNewFilm } = useFetchData('film', 'getNewFilm')
-    const { data: dataFilms, err: errFilms } = useFetchData('film', 'getFilms')
+    const { data: dataNewFilm } = useFetchData('film', 'getNewFilm')
+    const { data: dataFilms } = useFetchData('film', 'getFilms')
     useEffect(() => {
         dataNewFilm && setNewFilm(dataNewFilm)
         dataFilms && setFilms(dataFilms)

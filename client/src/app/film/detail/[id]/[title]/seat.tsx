@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, Tooltip } from "@nextui-org/react"
 import { useFetchDataByKey } from '@/hooks/useFetch'
 import { io } from 'socket.io-client';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+let socket: any;
 const Seat = ({ props }: { props: any }) => {
     const key = { date: props.day, time: props.time.toString() }
     const { data, err: errSeat } = useFetchDataByKey('ticket', 'getSeatDetail', key);
@@ -17,14 +18,17 @@ const Seat = ({ props }: { props: any }) => {
     }, [data])
     useEffect(() => {
         // Kết nối đến server
-        const socket = io(`${process.env.NEXT_PUBLIC_URL}`);
+        if (!socket) {
+
+            socket = io(`${process.env.NEXT_PUBLIC_URL}`);
+        }
         // Lắng nghe sự kiện 'seat-changed'
-        socket.on('seat-changed', (newTicket) => {
+        socket.on('seat-changed', (newTicket: any) => {
             if (props.day === newTicket.date && props.time === newTicket.time) {
                 setSeatData([...seatData, newTicket.seat])
             }
         });
-        socket.on('seat-focus', (seatSocket) => {
+        socket.on('seat-focus', (seatSocket: any) => {
             if (key.date === seatSocket.date && key.time.toString() === seatSocket.time && userSelect !== seatSocket.seat) {
                 setSeatFocus([...seatFocus, seatSocket.seat])
             }
@@ -33,7 +37,9 @@ const Seat = ({ props }: { props: any }) => {
         socket.emit('seat-select', { seat: props.seat });
         return () => {
             socket.off('seat-changed');
+            socket.off('seat-focus');
             socket.close();
+            socket = null
         };
     }, [userSelect]);
     const handleSelectSeat = (col: string, row: number) => {

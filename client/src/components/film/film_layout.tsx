@@ -1,7 +1,7 @@
+'use client'
 import { FilmDetailType } from '@/types/film'
 import { formatDate } from '@/utils/util'
 import { useRouter } from 'next/navigation'
-import React from 'react'
 
 const FilmLayout = ({ data }: { data: FilmDetailType }) => {
     const router = useRouter()

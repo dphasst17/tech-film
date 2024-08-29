@@ -1,3 +1,4 @@
+'use client'
 import { AuthRequest } from "@/types/auth"
 
 export const login = async (data: AuthRequest) => {
@@ -28,11 +29,11 @@ export const forgotPassword = async (data: AuthRequest) => {
     }).then(res => res.json())
 }
 export const newToken = async (token: string) => {
-    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/auth/new-token`, {
-        method: 'POST',
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/auth/token`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
-    }).then(res => res.json())
+    })
 }

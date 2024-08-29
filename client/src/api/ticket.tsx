@@ -1,3 +1,4 @@
+'use client'
 export const getTicketByUser = async (token: string) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/ticket/user`, {
         method: 'GET',

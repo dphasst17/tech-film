@@ -1,3 +1,4 @@
+'use client'
 import FilmLayout from '@/components/film/film_layout'
 import { filmStore } from '@/store/film'
 import React from 'react'

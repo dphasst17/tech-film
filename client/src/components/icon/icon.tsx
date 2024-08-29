@@ -1,3 +1,4 @@
+'use client'
 export const MenuIcon = (props: any) => {
     return (
         <svg

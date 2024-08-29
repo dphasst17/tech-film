@@ -1,5 +1,5 @@
+'use client'
 import { Card } from '@nextui-org/react'
-import React from 'react'
 
 const CustomCard = () => {
     return <Card className="h-[500px] bg-zinc-500 space-y-5 p-4">

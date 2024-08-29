@@ -3,7 +3,7 @@ import FilmLayout from '@/components/film/film_layout'
 import { filmStore } from '@/store/film'
 import React, { useEffect, useState } from 'react'
 import { FilmAll } from '@/types/film';
-import { Card, Pagination } from '@nextui-org/react';
+import { Pagination } from '@nextui-org/react';
 import { getFilms } from '@/api/film';
 import CustomCard from '@/components/film/custom_card';
 
@@ -26,7 +26,7 @@ const FilmIndex = () => {
         )
     }
     return <div className='w-full h-auto flex flex-col justify-center items-center pb-10'>
-        <div className='title w-full font-tech-shark text-7xl text-white text-center mb-10'>FILM</div>
+        <div className='title w-full font-tech-shark text-7xl text-white text-center mb-10'>Search</div>
         <div className='w-[90%] h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4'>
             {!pending && data && data.detail.map((c, i) => <FilmLayout data={c} key={`film-${i}`} />)}
             {pending && [...Array(10)].map((c, i) => <CustomCard key={`film-${i}`} />)}

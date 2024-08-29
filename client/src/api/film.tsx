@@ -1,3 +1,4 @@
+'use client'
 export const getFilms = async (page?: string) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film?page=${page || 1}`)
         .then(res => res.json())

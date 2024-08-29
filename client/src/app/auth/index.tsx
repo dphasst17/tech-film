@@ -8,14 +8,13 @@ import { useRouter } from 'next/navigation';
 import { save } from '@/utils/cookie';
 import { StateContext } from '@/contexts/state';
 
-const AuthIndex = () => {
+const AuthIndex = React.memo(() => {
     const { register: regissi, handleSubmit: handlesi } = useForm()
     const { register: regisu, handleSubmit: handlesu } = useForm()
     const { setIsLog, setRole } = use(StateContext)
     const [selected, setSelected] = useState<string>("sign-in");
     const router = useRouter()
     const onSubmit = (data: { [key: string]: string }) => {
-        console.log(data)
         if (selected === "sign-up" && data.password !== data.confirm) {
             toast.error("Confirm password does not match with password")
             return
@@ -31,7 +30,7 @@ const AuthIndex = () => {
                     save('filmlogs', 'true', res.data.expired_refresh)
                     save('atk', res.data.access, res.data.expired_access)
                     save('rtk', res.data.refresh, res.data.expired_refresh)
-                    save('role', res.data.role, res.data.expired_refresh)
+                    save('f-role', res.data.role, res.data.expired_refresh)
                     setRole(res.data.role)
                     setIsLog(true)
                     router.push("/")
@@ -115,6 +114,6 @@ const AuthIndex = () => {
             </div>
         </div>
     </div>
-}
+})
 
 export default AuthIndex

@@ -1,3 +1,4 @@
+'use client'
 export const getUserData = async (token: string) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
         method: 'GET',

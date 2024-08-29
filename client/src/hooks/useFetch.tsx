@@ -1,3 +1,4 @@
+'use client'
 import { use, useEffect, useState } from "react";
 import * as apiFilm from "@/api/film"
 import * as apiUser from "@/api/user"
@@ -31,8 +32,8 @@ export const useFetchData = (type: string, fName: string) => {
     const [data, setData] = useState(null);
     const [err, setErr] = useState(null);
     const { setIsLoading } = use(StateContext)
-    let url = handleGetApi(type, fName)
     useEffect(() => {
+        let url = handleGetApi(type, fName)
         setIsLoading(true)
         url().then((res: any) => {
             setIsLoading(false)
@@ -45,7 +46,7 @@ export const useFetchData = (type: string, fName: string) => {
             .catch((err: any) => {
                 setErr(err)
             })
-    }, [url])
+    }, [])
     return { data, err };
 }
 export const useFetchDataByKey = (type: string, fName: string, key: string | number | any[] | { [key: string]: string | number | boolean }) => {

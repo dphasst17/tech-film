@@ -1,3 +1,4 @@
+'use client'
 import { newToken } from "@/api/auth"
 import Cookies from "js-cookie"
 const save = (key: string, value: string, exp: number) => {
@@ -26,7 +27,7 @@ const getToken = async () => {
         const response = await newToken(refresh)
         const res = await response.json()
         save('atk', res.data.access, res.data.expired_access)
-        return res.data.accessToken
+        return res.data.access
 
     }
     return access
