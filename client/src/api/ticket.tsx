@@ -1,6 +1,6 @@
 'use client'
-export const getTicketByUser = async (token: string) => {
-    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/ticket/user`, {
+export const getTicketByUser = async (token: string, page?: string, limit?: string) => {
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/ticket/user?page=${page || 1}&limit=${limit || 3}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

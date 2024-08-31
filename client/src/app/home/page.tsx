@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
-import HomeIndex from '.'
+import HomePage from '.'
 
 const Home_Page = () => {
-    return <HomeIndex />
+    return <HomePage />
 }
 
 export default Home_Page

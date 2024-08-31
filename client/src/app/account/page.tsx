@@ -1,8 +1,8 @@
-import React from 'react'
-import AccountIndex from '.'
+'use client'
+import UserIndex from '.'
 
 const Account = () => {
-    return <AccountIndex />
+    return <UserIndex />
 }
 
 export default Account

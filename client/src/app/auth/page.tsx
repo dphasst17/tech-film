@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
-import AuthIndex from '.'
+import AuthPage from '.'
 
 const Auth = () => {
-    return <AuthIndex />
+    return <AuthPage />
 }
 
 export default Auth

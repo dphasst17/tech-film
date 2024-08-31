@@ -1,18 +1,16 @@
-//create user store using zustand
 'use client'
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
 import { User } from '@/types/user'
-import { TicketByUser } from '@/types/ticket'
+import { TicketResponse } from '@/types/ticket'
 
 interface UserState {
     users: User[] | null,
-    ticket: TicketByUser[] | null,
+    ticket: TicketResponse | null,
     setUsers: (users: User[]) => void,
-    setTicket: (ticket: TicketByUser[]) => void
+    setTicket: (ticket: TicketResponse) => void
 }
 
-export const userStore = create<UserState>((set) => ({
+export const accountStore = create<UserState>((set) => ({
     users: null,
     ticket: null,
     setUsers: (users) => set({ users }),

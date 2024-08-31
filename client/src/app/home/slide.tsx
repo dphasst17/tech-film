@@ -3,17 +3,16 @@ import { filmStore } from "@/store/film";
 import { formatDate } from "@/utils/util";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 const SlideShow = () => {
     const router = useRouter()
     const { newFilm } = filmStore()
     const [indexActive, setIndexActive] = useState(0)
-    const next = () => {
+    /* const next = () => {
         indexActive === 3 ? setIndexActive(0) : setIndexActive(indexActive + 1)
     }
     const prev = () => {
         indexActive === 0 ? setIndexActive(2) : setIndexActive(indexActive - 1)
-    }
+    } */
     useEffect(() => {
         const interval = setInterval(() => {
             setIndexActive(indexActive => indexActive === 3 ? 0 : indexActive + 1);
@@ -21,7 +20,6 @@ const SlideShow = () => {
         return () => clearInterval(interval); // Hủy interval khi component unmount
     }, []);
     return <section className="relative slide-show w-full h-[700px] flex items-center justify-around animateOpacity transition-all mb-10">
-        <GrFormPrevious onClick={prev} className="absolute w-[40px] h-[40px] bg-zinc-600 text-white rounded-lg cursor-pointer z-30 left-10 md:left-20" />
         <div className="relative w-[90%] h-full flex flex-wrap items-end rounded-lg border border-solid border-zinc-300 overflow-hidden z-20">
             <div className="absolute w-full h-full z-10 bg-zinc-950 bg-opacity-50"></div>
             {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
@@ -47,7 +45,6 @@ const SlideShow = () => {
             </div>
 
         </div>
-        <GrFormNext onClick={next} className="absolute w-[40px] h-[40px] bg-zinc-600 text-white rounded-lg cursor-pointer z-30 right-10 md:right-20" />
 
     </section>
 }

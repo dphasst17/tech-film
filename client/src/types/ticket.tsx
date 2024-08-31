@@ -28,6 +28,13 @@ export interface TicketRequest extends InfoTicket {
     dateBuy: string,
     count: number
 }
+export interface TicketResponse {
+    total: number
+    totalPage: number
+    limit: number
+    page: number
+    data: TicketByUser[]
+}
 export interface TicketByUser {
     _id: string
     idTicket: string

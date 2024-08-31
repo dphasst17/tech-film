@@ -1,24 +1,13 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { FaLock } from "react-icons/fa";
-import { FaUnlock } from "react-icons/fa";
+import { FlatColorIconsLock } from '../icon/lock';
+import { FlatColorIconsUnlock } from '../icon/unlock'
 const Widget = () => {
     const [isLock, setIsLock] = useState<boolean>(false)
     const [hour, setHour] = useState('');
     const [min, setMin] = useState('');
     const [sec, setSec] = useState('');
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            const today = new Date();
-            displayClock(today);
-        }, 500);
-
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
-    function displayClock(today: any) {
+    const displayClock = (today: any) => {
         let hour = padZeros(today.getHours());
         let minutes = padZeros(today.getMinutes());
         let seconds = padZeros(today.getSeconds());
@@ -32,13 +21,22 @@ const Widget = () => {
         setMin(minutes);
         setSec(seconds);
     }
-    function padZeros(num: any) {
+    const padZeros = (num: any) => {
         if (num < 10) {
             num = '0' + num;
         }
         return num;
     }
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const today = new Date();
+            displayClock(today);
+        }, 500);
 
+        return () => {
+            clearInterval(timer);
+        };
+    }, [displayClock]);
     return (
         <div className={`fixed ${isLock ? 'w-screen h-screen bottom-0 left-0' : 'w-[10vw] h-[50px] bottom-2 px-2'} min-w-[250px] transition-all mx-auto flex flex-wrap justify-start items-center z-50`}>
             <div className={`${isLock ? 'w-full' : 'w-[250px] bg-opacity-90 px-1'} h-full bg-zinc-950 rounded-md flex items-center justify-center  transition-all`}>
@@ -56,7 +54,7 @@ const Widget = () => {
                     </div>
                 </div>
                 <div className={`flex justify-center items-center h-full ${isLock ? 'w-[100px]  xl:text-[50px] 2xl:text-[60px]' : 'w-[20px] text-[20px]'} text-white`} onClick={() => setIsLock(!isLock)}>
-                    {isLock ? <FaLock /> : <FaUnlock />}
+                    {isLock ? <FlatColorIconsLock /> : <FlatColorIconsUnlock />}
                 </div>
             </div>
         </div>

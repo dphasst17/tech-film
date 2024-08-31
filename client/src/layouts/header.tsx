@@ -1,12 +1,11 @@
 'use client'
-import { FilmIcon, MenuIcon } from "@/components/icon/icon"
+import { FilmIcon } from "@/components/icon/icon"
 import { StateContext } from "@/contexts/state"
-import { userStore } from "@/store/user"
+import { accountStore } from "@/store/account"
 import { remove } from "@/utils/cookie"
-import { Button, Input, NavbarContent } from "@nextui-org/react"
+import { Button, Input } from "@nextui-org/react"
 import { usePathname, useRouter } from "next/navigation"
-import { use, useEffect, useState } from "react"
-import { BiSearch } from "react-icons/bi"
+import { use, useState } from "react"
 interface NavArr {
     name: string
     url: string
@@ -15,7 +14,7 @@ const Header = () => {
     const router = useRouter()
     const pathname = usePathname()
     const { role, isLog, setRole, setIsLog } = use(StateContext)
-    const { users } = userStore()
+    const { users } = accountStore()
     const [searchValue, setSearchValue] = useState<string>('')
     const handleNavigate = (url: string) => {
         router.push(url)
@@ -86,7 +85,10 @@ const Header = () => {
                 </div>
             </nav>
             <nav className="h-full flex items-center ">
-                <Input placeholder="Search" endContent={<BiSearch onClick={() => searchValue !== "" && router.push(`/film/search/${searchValue}`)} className="cursor-pointer text-white" />}
+                <Input placeholder="Search" endContent={<div onClick={() => searchValue !== "" && router.push(`/film/search/${searchValue}`)}
+                    className="cursor-pointer text-white bg-blue-500 px-2 rounded-md" >
+                    Search
+                </div>}
                     className="text-white"
                     onChange={(e) => setSearchValue(e.target.value)}
                     onKeyDown={(e) => { e.code === "Enter" && searchValue !== "" && router.push(`/film/search/${searchValue}`) }}

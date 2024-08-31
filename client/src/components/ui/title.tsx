@@ -1,7 +1,7 @@
 'use client'
-const Title = ({ props }: { props: { value: string } }) => {
+const Title = ({ title }: { title: string }) => {
     return <div className='title w-full h-[50px] flex items-center justify-center'>
-        <div className='cursor-pointer font-tech-shark text-white font-bold text-[25px]'>{props.value}</div>
+        <div className='cursor-pointer font-tech-shark text-white font-bold text-[25px]'>{title}</div>
     </div>
 }
 export default Title

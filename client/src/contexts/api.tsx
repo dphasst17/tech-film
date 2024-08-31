@@ -1,24 +1,24 @@
 'use client'
-import { useFetchData } from "@/hooks/useFetch";
+import { useFetchData } from "@/hooks/useFetchData";
 import { filmStore } from "@/store/film";
 import { createContext, use, useEffect } from "react";
 import { StateContext } from "./state";
 import { getToken } from "@/utils/cookie";
 import { getUserData } from "@/api/user";
-import { userStore } from "@/store/user";
+import { accountStore } from "@/store/account";
 import { getTicketByUser } from "@/api/ticket";
 
 export const ApiContext = createContext<any>({});
 export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     const { isLog, role } = use(StateContext)
-    const { setUsers, setTicket } = userStore()
+    const { setUsers, setTicket } = accountStore()
     const { setFilms, setNewFilm } = filmStore()
     const { data: dataNewFilm } = useFetchData('film', 'getNewFilm')
     const { data: dataFilms } = useFetchData('film', 'getFilms')
     useEffect(() => {
         dataNewFilm && setNewFilm(dataNewFilm)
         dataFilms && setFilms(dataFilms)
-    }, [dataNewFilm, dataFilms])
+    }, [dataNewFilm, dataFilms, setNewFilm, setFilms])
     useEffect(() => {
         if (isLog) {
             const fetchData = async () => {
@@ -41,7 +41,7 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
             fetchData()
         }
 
-    }, [isLog, role])
+    }, [isLog, role, setUsers, setTicket])
     return (
         <ApiContext.Provider value={{}}>
             {children}

@@ -57,7 +57,7 @@ export default function RootLayout({
         <StateProvider>
           <ApiProvider>
             <Providers>
-              <LayoutPage children={children} />
+              <LayoutPage>{children}</LayoutPage>
             </Providers>
           </ApiProvider>
         </StateProvider>

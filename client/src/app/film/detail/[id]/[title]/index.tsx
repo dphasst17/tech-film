@@ -1,5 +1,5 @@
 'use client'
-import { useFetchDataByKey } from '@/hooks/useFetch'
+import { useFetchDataByKey } from '@/hooks/useFetchData'
 import { FilmDetailType } from '@/types/film'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'

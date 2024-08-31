@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { save } from '@/utils/cookie';
 import { StateContext } from '@/contexts/state';
 
-const AuthIndex = React.memo(() => {
+const AuthPage = React.memo(() => {
     const { register: regissi, handleSubmit: handlesi } = useForm()
     const { register: regisu, handleSubmit: handlesu } = useForm()
     const { setIsLog, setRole } = use(StateContext)
@@ -116,4 +116,4 @@ const AuthIndex = React.memo(() => {
     </div>
 })
 
-export default AuthIndex
+export default AuthPage

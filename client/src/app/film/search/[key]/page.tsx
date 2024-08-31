@@ -2,11 +2,11 @@
 import FilmLayout from '@/components/film/film_layout'
 import React, { useEffect, useState } from 'react'
 import { FilmAll } from '@/types/film';
-import { Card, Pagination } from '@nextui-org/react';
-import { getFilms, searchFilm } from '@/api/film';
+import { Pagination } from '@nextui-org/react';
+import { searchFilm } from '@/api/film';
 import CustomCard from '@/components/film/custom_card';
 import { useParams } from 'next/navigation';
-import { useFetchDataByKey } from '@/hooks/useFetch';
+import { useFetchDataByKey } from '@/hooks/useFetchData';
 
 const FilmSearch = () => {
     const param = useParams()

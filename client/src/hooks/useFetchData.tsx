@@ -46,7 +46,7 @@ export const useFetchData = (type: string, fName: string) => {
             .catch((err: any) => {
                 setErr(err)
             })
-    }, [])
+    }, [type, fName, setIsLoading]);
     return { data, err };
 }
 export const useFetchDataByKey = (type: string, fName: string, key: string | number | any[] | { [key: string]: string | number | boolean }) => {
@@ -66,6 +66,6 @@ export const useFetchDataByKey = (type: string, fName: string, key: string | num
             .catch((err: any) => {
                 setErr(err)
             })
-    }, []);
+    }, [type, fName, key, setIsLoading]);
     return { data, err };
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import SlideShow from './slide'
 import New from './new'
 
-const HomeIndex = React.memo(() => {
+const HomePage = React.memo(() => {
     return (
         <div className='w-full h-auto min-h-screen '>
             <SlideShow />
@@ -12,4 +12,4 @@ const HomeIndex = React.memo(() => {
     )
 })
 
-export default HomeIndex
+export default HomePage
