@@ -7,8 +7,10 @@ import { UserModule } from './api/user/user.module';
 import { AuthModule } from './api/auth/auth.module';
 import { FilmModule } from './api/film/film.module';
 import { TicketModule } from './api/ticket/ticket.module';
-import { JwtAdminAuthMiddleware, JwtAuthMiddleware } from './middlewares/token.middleware';
+import { JwtAuthMiddleware } from './middlewares/token.middleware';
 import { JwtModule } from '@nestjs/jwt';
+import { StatisModule } from './api/statis/statis.module';
+import { JwtAdminAuthMiddleware } from './middlewares/admin.token.middleware';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -18,7 +20,7 @@ import { JwtModule } from '@nestjs/jwt';
     AuthModule,
     FilmModule,
     TicketModule,
-
+    StatisModule
   ],
   controllers: [AppController],
   providers: [AppService],
@@ -40,6 +42,8 @@ export class AppModule {
         { path: 'api/film', method: RequestMethod.POST },
         { path: 'api/film/:id', method: RequestMethod.PUT },
         { path: 'api/user/all', method: RequestMethod.GET },
+        { path: 'api/statis/film', method: RequestMethod.GET },
+        { path: 'api/statis/user', method: RequestMethod.GET },
       )
   }
 

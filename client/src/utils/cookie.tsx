@@ -17,8 +17,8 @@ const remove = (key: string) => {
     })
 }
 const getToken = async () => {
-    const access = Cookies.get('atk')
-    const refresh = Cookies.get('rtk')
+    const access = get('f-atk')
+    const refresh = get('f-rtk')
     if (!access) {
         if (!refresh) {
             remove('filmlogs')
@@ -26,9 +26,8 @@ const getToken = async () => {
         }
         const response = await newToken(refresh)
         const res = await response.json()
-        save('atk', res.data.access, res.data.expired_access)
+        save('f-atk', res.data.access, res.data.expired_access)
         return res.data.access
-
     }
     return access
 }

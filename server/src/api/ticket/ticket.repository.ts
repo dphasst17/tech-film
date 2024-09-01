@@ -21,7 +21,10 @@ export class TicketRepository {
     async findSeat(date: string, time: string): Promise<Ticket[]> {
         return await this.ticket.find({ date: date, timeFrame: time }).select({ _id: 0, seat: 1 }).exec()
     }
-    async getByUser(id: string): Promise<Ticket[]> {
+    async getCountByUser(id: string): Promise<number> {
+        return await this.ticket.find({ idUser: id }).countDocuments()
+    }
+    async getByUser(id: string, page: string, limit: string): Promise<Ticket[]> {
         return await this.ticket.aggregate([
             { $match: { idUser: id } },
             { $lookup: { from: 'film', localField: 'idFilm', foreignField: 'id', as: 'film' } },
@@ -41,6 +44,8 @@ export class TicketRepository {
             }
         ])
             .sort({ created_at: -1 })
+            .skip((parseInt(page) - 1) * parseInt(limit))
+            .limit(parseInt(limit))
             .exec()
     }
     async delete(id: string): Promise<Ticket> {

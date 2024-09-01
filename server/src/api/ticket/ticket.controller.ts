@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Request, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query, Request, Res } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { TicketCreate } from 'src/interfaces/ticket.interface';
 import { RequestCustom } from 'src/interfaces/request.interface';
@@ -9,9 +9,9 @@ export class TicketController {
         private readonly ticketService: TicketService,
     ) { }
     @Get('/user')
-    async getByUser(@Request() req: RequestCustom, @Res() res: Response): Promise<Response> {
+    async getByUser(@Request() req: RequestCustom, @Res() res: Response, @Query('page') page: string = '1', @Query('limit') limit: string = '3'): Promise<Response> {
         const id = req.idUser
-        const data = await this.ticketService.getByUser(id)
+        const data = await this.ticketService.getByUser(id, page, limit)
         return res.status(data.status).json(data);
     }
     @Post('seat')

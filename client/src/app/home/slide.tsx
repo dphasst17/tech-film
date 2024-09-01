@@ -20,10 +20,11 @@ const SlideShow = () => {
         return () => clearInterval(interval); // Hủy interval khi component unmount
     }, []);
     return <section className="relative slide-show w-full h-[700px] flex items-center justify-around animateOpacity transition-all mb-10">
-        <div className="relative w-[90%] h-full flex flex-wrap items-end rounded-lg border border-solid border-zinc-300 overflow-hidden z-20">
+        <div className="relative w-[100%] h-full flex flex-wrap items-end overflow-hidden z-20">
             <div className="absolute w-full h-full z-10 bg-zinc-950 bg-opacity-50"></div>
             {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
-                <img className={`${i === indexActive ? 'block' : 'hidden'} absolute w-full h-full object-cover animateShowItems z-0 transition-all`} src={c.background} key={`${i}slide-background-${c.id}`} />)}
+                <img className={`${i === indexActive ? 'block' : 'hidden'} absolute w-full h-full object-cover animateShowItems z-0 transition-all`}
+                    src={c.background} key={`${i}slide-background-${c.id}`} alt={`${i}slide-background-${c.id}`} loading='lazy' />)}
             {newFilm !== null && newFilm.slice(0, 4).map((c, i) =>
                 <div
                     className={`${i === indexActive ? 'flex' : 'hidden'} w-full h-2/4 overflow-hidden flex-wrap flex-col justify-center 
@@ -41,7 +42,7 @@ const SlideShow = () => {
                     <img onClick={() => { setIndexActive(i) }}
                         className={`${i === indexActive ? 'w-[180px] h-[260px] border-[3px] border-solid border-red-600 rounded-lg' : 'w-[150px] h-[230px]'} 
                 mx-2 mb-4 transition-all z-10`} src={c.thumbnails}
-                        key={`${i}slide-thumb-${c.id}`} />)}
+                        key={`${i}slide-thumb-${c.id}`} alt={`${i}slide-thumb-${c.id}`} loading="lazy" />)}
             </div>
 
         </div>

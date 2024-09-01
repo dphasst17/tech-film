@@ -1,15 +1,17 @@
 import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Response, NextFunction } from 'express';
+import { AuthRepository } from 'src/api/auth/auth.repository';
 import { RequestCustom } from 'src/interfaces/request.interface';
-
 @Injectable()
-export class JwtAuthMiddleware implements NestMiddleware {
-    constructor(private readonly jwtService: JwtService) { }
+export class JwtAdminAuthMiddleware implements NestMiddleware {
+    constructor(
+        private readonly jwtService: JwtService,
+        private readonly authRepository: AuthRepository
+    ) { }
 
     async use(req: RequestCustom, res: Response, next: NextFunction) {
         const authHeader = req.headers.authorization;
-
         if (!authHeader) {
             throw new UnauthorizedException('Authorization header not found');
         }
@@ -20,6 +22,10 @@ export class JwtAuthMiddleware implements NestMiddleware {
             if (!decoded) {
                 throw new UnauthorizedException('Token has expired')
             };
+            const isAdmin = await this.authRepository.isAdmin(decoded.idUser)
+            if (!isAdmin) {
+                throw new UnauthorizedException('Not an admin')
+            }
             req.idUser = decoded.idUser;
             next();
         } catch (err) {
@@ -27,4 +33,3 @@ export class JwtAuthMiddleware implements NestMiddleware {
         }
     }
 }
-

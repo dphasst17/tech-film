@@ -75,13 +75,13 @@ const Seat = ({ props }: { props: any }) => {
             <div className='w-[90%] h-full flex items-center justify-center'>SEAT POSITION</div>
         </div>
         <div className='w-[10%] h-[92%] flex flex-col justify-around items-center'>
-            {col.map(c => <div className='text-white'>{c.toLocaleUpperCase()}</div>)}
+            {col.map(c => <div key={c} className='text-white'>{c.toLocaleUpperCase()}</div>)}
         </div>
         <div className='w-[90%] h-[92%] flex flex-col justify-around'>
             {col.map(c =>
-                <div className='w-full grid grid-cols-7 gap-2 lg:gap-6 xl:gap-10'>
+                <div key={`seat-${c}`} className='w-full grid grid-cols-7 gap-2 lg:gap-6 xl:gap-10'>
                     {row.map(r =>
-                        <Tooltip content={tooltipContent(c, r)}>
+                        <Tooltip content={tooltipContent(c, r)} key={`${c}${r}`}>
                             <Button color={colorBtn(c, r)}
                                 radius="sm"
                                 className={`${seatData?.includes(`${c.toLocaleUpperCase()}${r}`) || seatFocus?.includes(`${c.toLocaleUpperCase()}${r}`) ? 'text-white' : 'text-black'}`}

@@ -19,10 +19,10 @@ const UserTicket = React.memo(() => {
                 {ticket?.data.slice((3 * activePage) - 3, 3 * activePage).map(t => <div
                     className='ticketDetail relative w-full h-[180px] flex flex-wrap my-1 rounded-lg' key={t.idTicket}>
                     <div className="overlay absolute w-full h-full top-0 left-0 z-0 bg-zinc-950 bg-opacity-65 rounded-lg">
-                        <img src={t.background} className='w-full h-full object-cover rounded-lg' loading='lazy' />
+                        <img src={t.background} className='w-full h-full object-cover rounded-lg' alt={`background-${t.title}`} loading='lazy' />
                     </div>
                     <div className='images w-1/5 h-full flex items-center justify-center z-10'>
-                        <Image src={t.thumbnails} className='w-full h-full max-h-[190px] object-cover' loading='lazy' />
+                        <Image src={t.thumbnails} className='w-full h-full max-h-[190px] object-cover' alt={`thumbnail-${t.title}`} loading='lazy' />
                     </div>
                     <div className="contentTicket w-4/5 h-full flex flex-wrap justify-around py-1 z-10">
                         <Code className='w-[95%] text-center flex justify-center items-center cursor-pointer font-bold text-white text-[20px] bg-zinc-900 bg-opacity-80 truncate'>#{t.idFilm}</Code>

@@ -7,10 +7,12 @@ import { getToken } from "@/utils/cookie";
 import { getUserData } from "@/api/user";
 import { accountStore } from "@/store/account";
 import { getTicketByUser } from "@/api/ticket";
+import { statisFilm, statisUser } from "@/api/statis";
+import { StatisState } from "@/types/statis";
 
 export const ApiContext = createContext<any>({});
 export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
-    const { isLog, role } = use(StateContext)
+    const { isLog, role, setStatis } = use(StateContext)
     const { setUsers, setTicket } = accountStore()
     const { setFilms, setNewFilm } = filmStore()
     const { data: dataNewFilm } = useFetchData('film', 'getNewFilm')
@@ -35,8 +37,23 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
                             if (res.status === 200) {
                                 setTicket(res.data)
                             }
-                        })
+                        }),
+                    role !== 2 && (
+                        statisUser(token)
+                            .then(res => {
+                                if (res.status === 200) {
+                                    setStatis((prev: StatisState) => ({ ...prev, user: res.data }))
+                                }
+                            }),
+                        statisFilm(token)
+                            .then(res => {
+                                if (res.status === 200) {
+                                    setStatis((prev: StatisState) => ({ ...prev, film: res.data }))
+                                }
+                            })
+                    )
                 )
+
             }
             fetchData()
         }

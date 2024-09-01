@@ -16,9 +16,18 @@ export class TicketService {
     private randomString = (length: number) => {
         return crypto.randomBytes(length).toString("hex");
     };
-    async getByUser(id: string): Promise<Responses> {
-        const userTicket = await this.ticketRepository.getByUser(id)
-        return userTicket ? { status: 200, data: userTicket } : { status: 404, message: 'Ticket does not available' }
+    async getByUser(id: string, page: string, limit: string): Promise<Responses> {
+        const getCount = await this.ticketRepository.getCountByUser(id)
+        const userTicket = await this.ticketRepository.getByUser(id, page, limit)
+        return userTicket ? {
+            status: 200, data: {
+                total: getCount,
+                totalPage: Math.ceil(getCount / parseInt(limit)),
+                limit: parseInt(limit),
+                page: parseInt(page),
+                data: userTicket
+            }
+        } : { status: 404, message: 'Ticket does not available' }
     }
 
     async findAll(): Promise<Responses> {

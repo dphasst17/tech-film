@@ -14,6 +14,6 @@ import { UserRepository } from '../user/user.repository';
         MongooseModule.forFeature([{ name: 'auth', schema: AuthSchema }]),
         MongooseModule.forFeature([{ name: 'user', schema: AuthSchema }])
     ],
-    exports: [AuthService]
+    exports: [AuthService, AuthRepository]
 })
 export class AuthModule { }

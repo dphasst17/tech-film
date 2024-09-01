@@ -40,16 +40,20 @@ const IndexDetail = () => {
             setUrlBackground(filmDetail[0].background)
         }
     }, [data])
-    return <div className="relative detailFilm w-full h-auto pt-10" style={{ backgroundImage: `url('${urlBackground}')`, backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%', backgroundAttachment: "fixed" }}>
-        <div className="overlay absolute w-full h-full inset-0 bg-zinc-950 bg-opacity-60 z-0"></div>
-        <BreadcrumbItems props={{ title: data?.map(d => d.title) }} />
+    return <div className="relative detailFilm w-full h-auto pt-10">
+        <div className="fixed w-full h-full inset-0 z-0">
+            <img src={urlBackground} className="w-full h-full object-cover" loading='lazy' alt={`fixed-${urlBackground}`} />
+        </div>
+        <div className="overlay absolute w-full h-full -top-2 left-0 bg-zinc-950 bg-opacity-60 z-0"></div>
+        <BreadcrumbItems props={{ title: data ? data.map(d => d.title) : ["Film detail"] }} />
         {data && data.map(d => <div className="relative w-full h-auto min-h-[300px] flex flex-wrap" key={d._id}>
             <div className="images relative w-full flex content-start justify-center h-[400px] lg:h-[500px] xl:h-[600px] 2xl:h-[700px]">
-                <div className="background absolute w-[98%] h-4/5 z-0 rounded-lg border border-solid border-zinc-200 animateShowItems transition-all animate-delay-0 p-2">
-                    <img src={d.background} className="w-full h-full rounded-lg object-cover animateShowItems" alt="" />
+                <div className="background absolute w-[99.5%] h-4/5 z-0 rounded-lg border border-solid border-zinc-200 animateShowItems transition-all animate-delay-0 
+                p-1">
+                    <img src={d.background} className="w-full h-full rounded-lg object-cover animateShowItems" alt="" loading='lazy' />
                 </div>
                 <div className="absolute thumbnails w-[200px] h-[250px] rounded-lg bottom-0 border border-solid border-zinc-200 animateShowItems transition-all animate-delay-0" >
-                    <img className="w-full h-full rounded-lg object-cover animateShowItems" src={d.thumbnails} />
+                    <img className="w-full h-full rounded-lg object-cover animateShowItems" src={d.thumbnails} alt="" loading='lazy' />
                 </div>
             </div>
             <div className="filmInfo w-full h-auto flex flex-wrap justify-center items-center mt-5 animateOpacity transition-all animate-delay-0-1">
@@ -76,10 +80,11 @@ const IndexDetail = () => {
 
             {/* isUser && */ <div className="frame w-full h-auto min-h-[400px] flex flex-wrap justify-center content-start">
                 <h1 className="w-full text-center font-sc-thin font-extrabold text-[40px] text-red-600 my-4">Time frame</h1>
-                <ButtonGroup size="lg">{d.frame.map(t => <Button className="transition-all" onClick={() => { setTime(t) }} color={t === time ? 'primary' : 'default'} radius="sm">{t}:00 {t < 12 ? 'AM' : 'PM'}</Button>)}</ButtonGroup>
+                <ButtonGroup size="lg">{d.frame.map(t => <Button key={`time-${t}`} className="transition-all"
+                    onClick={() => { setTime(t) }} color={t === time ? 'primary' : 'default'} radius="sm">{t}:00 {t < 12 ? 'AM' : 'PM'}</Button>)}</ButtonGroup>
                 <h1 className="w-full text-center font-sc-thin font-extrabold text-[40px] text-red-600 my-4">Date</h1>
                 <div className="w-4/5 grid grid-cols-2 md:grid-cols-4 2xl:grid-cols-6 gap-4">
-                    {dateArray.map(d => <Button className="transition-all" radius="sm" size="lg" onClick={() => { setDay(d) }} color={d === day ? 'primary' : 'default'}>{d}</Button>)}
+                    {dateArray.map(d => <Button key={`date-${d}`} className="transition-all" radius="sm" size="lg" onClick={() => { setDay(d) }} color={d === day ? 'primary' : 'default'}>{d}</Button>)}
                 </div>
                 {time !== 0 && day !== 0 && <Seat props={{ seat, setSeat, time, day }} />}
                 <h1 className="w-full text-center font-sc-thin font-extrabold text-[40px] text-red-600 my-4">Form</h1>
