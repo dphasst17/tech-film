@@ -63,7 +63,6 @@ export class AuthService {
         return updated ? { status: 200, message: 'Update auth success' } : { status: 404, message: 'Auth not found' }
     }
     async getNewToken(idUser: string): Promise<Responses> {
-        console.log(idUser)
         const token = this.generateToken(idUser, "access")
         return token ? { status: 200, data: token } : { status: 404, message: 'User not found' }
     }
