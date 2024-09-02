@@ -26,7 +26,7 @@ const FilmIndex = () => {
         )
     }
     return <div className='w-full h-auto flex flex-col justify-center items-center pb-10'>
-        <div className='title w-full font-tech-shark text-7xl text-white text-center mb-10'>Search</div>
+        <div className='title w-full font-tech-shark text-7xl text-white text-center mb-10'>Film</div>
         <div className='w-[90%] h-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4'>
             {!pending && data && data.detail.map((c, i) => <FilmLayout data={c} key={`film-${i}`} />)}
             {pending && [...Array(10)].map((c, i) => <CustomCard key={`film-${i}`} />)}

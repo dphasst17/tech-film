@@ -2,15 +2,26 @@
 import { FilmDetailType } from '@/types/film'
 import { formatDate } from '@/utils/util'
 import { useRouter } from 'next/navigation'
+import { FilmDetail, FilmEdit } from '../icon/film'
 
-const FilmLayout = ({ data, key }: { data: FilmDetailType, key: string }) => {
+const FilmLayout = ({ data, key, type, ...props }: { data: FilmDetailType, key: string, type?: 'user' | 'admin', props?: any }) => {
     const router = useRouter()
     const handleNavigate = (url: string) => {
         router.push(url)
     }
-    return <div className='group h-[500px] rounded-md cursor-pointer'>
+    return <div className='group h-[500px] rounded-md cursor-pointer' key={key}>
+
         <div className='relative w-full h-full rounded-md group-hover:scale-105 transition-all'
-            onClick={() => handleNavigate(`/film/detail/${data._id}/${data.title}`)}>
+            onClick={() => type !== 'admin' && handleNavigate(`/film/detail/${data._id}/${data.title}`)}>
+            {type === 'admin' && <div
+                className='absolute group-hover:flex hidden top-1 left-1 z-10 w-[30px] h-[30px] items-center justify-center bg-green-500 text-white transition-all rounded-md'>
+                <FilmEdit className='w-5 h-5' />
+            </div>}
+            {type === 'admin' && <div
+                onClick={() => handleNavigate(`/film/detail/${data._id}/${data.title}`)}
+                className='absolute group-hover:flex hidden top-1 left-10 z-10 w-[30px] h-[30px] items-center justify-center bg-blue-500 text-white transition-all rounded-md'>
+                <FilmDetail className='w-5 h-5' />
+            </div>}
             <div className='thumbnails absolute w-full h-full inset-0 z-0 rounded-md'>
                 <img src={data.background} className='w-full h-full object-cover rounded-md' loading='lazy' alt={`${data.title}`} />
             </div>
