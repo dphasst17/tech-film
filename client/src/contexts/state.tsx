@@ -14,9 +14,6 @@ export const StateProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLog(JSON.parse(get('filmlogs') || 'false'))
         setRole(Number(JSON.parse(get('f-role') || '2')))
     }, [])
-    useEffect(() => {
-        statis && console.log(statis)
-    }, [statis])
     return (
         <StateContext.Provider value={{
             isLog, setIsLog,

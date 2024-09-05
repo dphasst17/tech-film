@@ -3,17 +3,20 @@ import { FilmDetailType } from '@/types/film'
 import { formatDate } from '@/utils/util'
 import { useRouter } from 'next/navigation'
 import { FilmDetail, FilmEdit } from '../icon/film'
+import { Modal, useDisclosure } from '@nextui-org/react'
+import EditFilm from '../modal/film.edit'
 
 const FilmLayout = ({ data, key, type, ...props }: { data: FilmDetailType, key: string, type?: 'user' | 'admin', props?: any }) => {
+    const { onOpen, isOpen, onOpenChange } = useDisclosure()
     const router = useRouter()
     const handleNavigate = (url: string) => {
         router.push(url)
     }
     return <div className='group h-[500px] rounded-md cursor-pointer' key={key}>
-
         <div className='relative w-full h-full rounded-md group-hover:scale-105 transition-all'
             onClick={() => type !== 'admin' && handleNavigate(`/film/detail/${data._id}/${data.title}`)}>
             {type === 'admin' && <div
+                onClick={() => onOpen()}
                 className='absolute group-hover:flex hidden top-1 left-1 z-10 w-[30px] h-[30px] items-center justify-center bg-green-500 text-white transition-all rounded-md'>
                 <FilmEdit className='w-5 h-5' />
             </div>}
@@ -34,6 +37,9 @@ const FilmLayout = ({ data, key, type, ...props }: { data: FilmDetailType, key: 
                 <span className='text-center text-3xl font-bold text-white z-10'>{formatDate(data.release)}</span>
             </div>
         </div>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <EditFilm />
+        </Modal>
     </div>
 }
 

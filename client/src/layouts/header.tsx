@@ -75,7 +75,7 @@ const Header = () => {
                             </div>)
                     }
                     {
-                        role !== 2 && adminNav.map((item: NavArr, index) =>
+                        isLog && role !== 2 && adminNav.map((item: NavArr, index) =>
                             <div key={index}>
                                 <Button className={`group text-white inline-flex h-max w-max items-center justify-center rounded-md 
                                 ${pathname === item.url ? 'bg-white text-zinc-950' : 'bg-transparent'} hover:bg-white px-4 py-2 text-lg font-medium transition-all hover:text-zinc-950`}

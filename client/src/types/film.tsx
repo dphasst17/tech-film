@@ -1,5 +1,5 @@
 export interface Film {
-    _id: string,
+    _id?: string,
     id: string,
     title: string,
     background: string,
@@ -13,7 +13,8 @@ export interface FilmDetailType extends Film {
     trailer: string,
     frame: Array<number>,
     director: string,
-    cast: string
+    cast: string,
+    [key: string]: any
 }
 export interface FilmAll {
     total: number,

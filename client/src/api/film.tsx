@@ -1,4 +1,7 @@
 'use client'
+
+import { DataInsert } from "@/components/modal/film.add"
+
 export const getFilms = async (page?: string) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film?page=${page || 1}`)
         .then(res => res.json())
@@ -11,11 +14,12 @@ export const getNewFilm = async () => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film/new`)
         .then(res => res.json())
 }
-export const createFilm = async (data: any/* FilmCreate */) => {
+export const createFilm = async (token: string, data: DataInsert) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data)
     }).then(res => res.json())

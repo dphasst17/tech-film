@@ -69,7 +69,7 @@ const Seat = ({ props }: { props: any }) => {
         const focus = seatFocus?.includes(data)
         return changed ? 'Sold' : focus ? 'Chosen by others' : 'Has not been selected'
     }
-    return <section className='seat w-full max-w-[1000px] min-w-[300px] h-[600px] flex flex-wrap justify-center bg-zinc-900 bg-opacity-70 p-2 rounded-lg'>
+    return <section className='seat w-full max-w-[1000px] min-w-[300px] h-[600px] flex flex-wrap justify-center bg-zinc-900 bg-opacity-70 p-2 rounded-lg mt-4'>
         <div className='w-full h-[8%] flex text-white bg-zinc-900 rounded-lg'>
             <div className='w-[10%] h-full flex items-center justify-center'>COLUMN</div>
             <div className='w-[90%] h-full flex items-center justify-center'>SEAT POSITION</div>

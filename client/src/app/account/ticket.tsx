@@ -1,22 +1,42 @@
 'use client'
 import { accountStore } from '@/store/account'
 import { Code, Image, Pagination } from '@nextui-org/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../../components/ui/title'
 import Skeletons from '@/components/ui/skeletons'
+import { getToken } from '@/utils/cookie'
+import { getTicketByUser } from '@/api/ticket'
+import { TicketByUser } from '@/types/ticket'
 
 const UserTicket = React.memo(() => {
     const { ticket } = accountStore()
+    const [data, setData] = useState<TicketByUser[] | null>(null)
     const [activePage, setActivePage] = useState<number>(1)
+    useEffect(() => {
+        ticket && setData(ticket.data)
+    }, [ticket])
+    const handleChangePage = async (page: number) => {
+        const token = await getToken()
+        setActivePage(page)
+        if (page === 1) {
+            ticket && setData(ticket.data)
+            return
+        }
+        token && getTicketByUser(token, page.toString(), '3')
+            .then(res => {
+                if (res.status === 200) setData(res.data.data)
+            })
+
+    }
     return <section className='ticket h-auto min-h-[300px] flex flex-wrap justify-center'>
         <Title title={'PURCHASED TICKET'} />
         <div className='items w-full h-auto flex flex-wrap justify-center'>
-            {!ticket && <><Skeletons />
+            {!data && <><Skeletons />
                 <Skeletons />
                 <Skeletons />
             </>}
             <div className='ticket w-3/5 h-auto min-h-[650px] flex flex-wrap justify-center'>
-                {ticket?.data.slice((3 * activePage) - 3, 3 * activePage).map(t => <div
+                {data && data.map((t: TicketByUser) => <div
                     className='ticketDetail relative w-full h-[180px] flex flex-wrap my-1 rounded-lg' key={t.idTicket}>
                     <div className="overlay absolute w-full h-full top-0 left-0 z-0 bg-zinc-950 bg-opacity-65 rounded-lg">
                         <img src={t.background} className='w-full h-full object-cover rounded-lg' alt={`background-${t.title}`} loading='lazy' />
@@ -35,10 +55,11 @@ const UserTicket = React.memo(() => {
                 </div>)}
             </div>
             {
-                ticket && <Pagination
+                ticket && data && <Pagination
                     className="w-full flex items-center justify-center my-2 animateOpacity transition-all cursor-pointer animate-delay-0-3"
+                    page={activePage}
                     isCompact size="lg" showControls total={ticket.totalPage} initialPage={1}
-                    onChange={(e) => { setActivePage(e) }}
+                    onChange={(e) => handleChangePage(e)}
                 />
             }
         </div >
