@@ -3,7 +3,7 @@ import { HydratedDocument, ObjectId } from 'mongoose';
 
 export type FilmDocument = HydratedDocument<Film>;
 
-@Schema({ collection: 'film' })
+@Schema({ collection: 'film', versionKey: false })
 export class Film {
     @Prop({ required: true })
     title: string;

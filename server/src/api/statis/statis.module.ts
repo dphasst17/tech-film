@@ -6,12 +6,14 @@ import { UserSchema } from 'src/schemas/user.schema';
 import { StatisController } from './statis.controller';
 import { StatisRepository } from './statis.repository';
 import { StatisService } from './statis.service';
+import { AuthSchema } from 'src/schemas/auth.schema';
 
 @Module({
     imports: [
         MongooseModule.forFeature([{ name: 'film', schema: FilmSchema }]),
         MongooseModule.forFeature([{ name: 'user', schema: UserSchema }]),
         MongooseModule.forFeature([{ name: 'ticket', schema: TicketSchema }]),
+        MongooseModule.forFeature([{ name: 'auth', schema: AuthSchema }]),
     ],
     controllers: [
         StatisController

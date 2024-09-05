@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type TicketDocument = HydratedDocument<Ticket>;
 
-@Schema({ collection: 'ticket' })
+@Schema({ collection: 'ticket', versionKey: false })
 export class Ticket {
     @Prop({ required: true })
     _id: string;

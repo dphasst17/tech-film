@@ -11,6 +11,7 @@ import { JwtAuthMiddleware } from './middlewares/token.middleware';
 import { JwtModule } from '@nestjs/jwt';
 import { StatisModule } from './api/statis/statis.module';
 import { JwtAdminAuthMiddleware } from './middlewares/admin.token.middleware';
+import { StaffModule } from './api/staff/staff.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -20,7 +21,8 @@ import { JwtAdminAuthMiddleware } from './middlewares/admin.token.middleware';
     AuthModule,
     FilmModule,
     TicketModule,
-    StatisModule
+    StatisModule,
+    StaffModule
   ],
   controllers: [AppController],
   providers: [AppService],

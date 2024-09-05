@@ -42,13 +42,28 @@ export class AuthService {
 
     }
     async register(data: { [key: string]: string | number }): Promise<Responses> {
+        const dataAuth = {
+            idUser: data.username,
+            username: data.username,
+            password: this.encodePass(data.password as string),
+            role: data.role ? data.role : 2
+        }
+        const dataUser = {
+            idUser: data.username,
+            email: data.email,
+            name: data.name,
+            phone: data.phone,
+            point: 0,
+            action: 'active',
+            created_at: new Date().toISOString().split("T")[0]
+        }
         const isUsername = await this.authRepository.login(data.username as string)
         const isEmail = await this.userService.find({ email: data.email }).exec()
         if (isUsername.length !== 0) { return { status: 403, message: 'Username already exists' } }
         if (isEmail.length !== 0) { return { status: 403, message: 'Email already exists' } }
         data.password = this.encodePass(data.password as string)
-        const createdAuth = await this.authRepository.register(data)
-        const createdUser = createdAuth && await this.userService.create({ ...data, idUser: createdAuth.idUser })
+        const createdAuth = await this.authRepository.register(dataAuth)
+        const createdUser = createdAuth && await this.userService.create(dataUser)
         if (!createdAuth) {
             return { status: 404, message: 'Register failed' }
         }

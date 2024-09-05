@@ -3,6 +3,7 @@ import { FilmCreate } from 'src/interfaces/film.interface';
 import { Responses } from 'src/interfaces/request.interface';
 import { Film } from 'src/schemas/film.schema';
 import { FilmRepository } from './film.repositoy';
+import { handleFindData } from 'src/utils/service';
 
 @Injectable()
 export class FilmService {
@@ -14,7 +15,6 @@ export class FilmService {
         const countData = await this.filmRepository.countData()
         const data: Film[] = await this.filmRepository.findAll(page, limit)
         if (!data || data.length === 0) return { status: 404, message: 'No data available' }
-
         return {
             status: 200, data: {
                 total: countData,
@@ -26,14 +26,10 @@ export class FilmService {
         }
     }
     async findOne(id: string): Promise<Responses> {
-        const data: Film[] = await this.filmRepository.findOne(id)
-        if (!data || data.length === 0) return { status: 404, message: 'No data available' }
-        return { status: 200, data: data }
+        return handleFindData(this.filmRepository.findOne(id))
     }
     async findNew(): Promise<Responses> {
-        const data: Film[] = await this.filmRepository.findNew()
-        if (!data || data.length === 0) return { status: 404, message: 'No data available' }
-        return { status: 200, data: data }
+        return handleFindData(this.filmRepository.findNew())
     }
     async search(key: string, page: string, limit: string): Promise<Responses> {
         const countData = await this.filmRepository.countData(key)
@@ -52,7 +48,7 @@ export class FilmService {
     async create(data: FilmCreate): Promise<Responses> {
         const dataInsert = await this.filmRepository.create(data)
         if (!dataInsert) return { status: 404, message: 'Create film failed' }
-        return { status: 200, message: 'Create film success' }
+        return { status: 200, message: 'Create film success', data: dataInsert }
     }
     async update(id: string, data: { [x: string]: string | number | boolean | number[] }): Promise<Responses> {
         const dataUpdate = await this.filmRepository.update(id, data)
