@@ -5,8 +5,6 @@ export type TicketDocument = HydratedDocument<Ticket>;
 
 @Schema({ collection: 'ticket', versionKey: false })
 export class Ticket {
-    @Prop({ required: true })
-    _id: string;
 
     @Prop({ required: true })
     idUser: string
@@ -33,7 +31,7 @@ export class Ticket {
     idFilm: string
 
     @Prop({ required: true })
-    release: string;
+    date: string;
 
     @Prop({ required: true })
     timeFrame: number
@@ -45,7 +43,7 @@ export class Ticket {
     orderId: string
 
     @Prop({ required: true })
-    confirm: boolean
+    isConfirm: boolean
 
 }
 

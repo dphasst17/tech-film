@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { TicketCreate } from 'src/interfaces/ticket.interface';
-import { Ticket } from 'src/schemas/ticket.schema';
 import { TicketRepository } from './ticket.repository';
 import { SocketClass } from 'src/sockets/socket';
-import crypto from "crypto";
 import { handleSendMail } from 'src/utils/mails';
 import { Responses } from 'src/interfaces/request.interface';
+import * as crypto from 'crypto';
 @Injectable()
 export class TicketService {
 

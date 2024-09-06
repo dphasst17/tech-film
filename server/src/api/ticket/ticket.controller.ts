@@ -20,10 +20,10 @@ export class TicketController {
         return res.status(result.status).json(result);
     }
     @Post()
-    async create(@Request() req: RequestCustom, @Body() data: TicketCreate, @Res() res: Response): Promise<any> {
+    async create(@Request() req: RequestCustom, @Body() data: TicketCreate, @Res() res: Response): Promise<Response> {
         const idUser = req.idUser
         const result = await this.ticketService.create(idUser, data)
-        return result
+        return res.status(result.status).json(result);
     }
     @Get('detail/:id')
     async detail(@Param('id') id: string, @Res() res: Response): Promise<Response> {

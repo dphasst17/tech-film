@@ -1,13 +1,18 @@
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
+import { Film } from "src/schemas/film.schema";
 import { Ticket } from "src/schemas/ticket.schema";
 
 export class TicketRepository {
     constructor(
         @InjectModel('ticket') private readonly ticket: Model<Ticket>,
+        @InjectModel('film') private readonly film: Model<Film>,
     ) { }
-    async create(data: { [key: string]: string | number | boolean | any }): Promise<Ticket> {
-        return await this.ticket.create(data);
+    async create(data: { [key: string]: string | number | boolean | any }): Promise<Film[]> {
+        const create_data = await this.ticket.create(data);
+        if (!create_data) throw new Error('Ticket create fail')
+        const getFilm = await this.film.find({ id: data.idFilm })
+        return getFilm
     }
     async update(id: string, data: { [key: string]: string | number | boolean | any }): Promise<Ticket> {
         return await this.ticket.findByIdAndUpdate(id, data, { new: true });

@@ -1,9 +1,18 @@
-import nodemailer from "nodemailer";
+import * as nodemailer from "nodemailer";
 import { OAuth2Client } from "google-auth-library";
-import QRCode from "qrcode";
+import * as QRCode from "qrcode";
 import { uiTicket } from "./ui-ticket";
 import { Responses } from "src/interfaces/request.interface";
-
+async function generateQRCode(data: string): Promise<string> {
+    try {
+        // Generate QR code as Data URL
+        const dataUrl = await QRCode.toDataURL(data);
+        return dataUrl;
+    } catch (error) {
+        console.error('Error generating QR code:', error);
+        throw error;
+    }
+}
 
 export const handleSendMail = async (d: any, type: string) => {
     const toMail = d.toMail;
@@ -20,8 +29,8 @@ export const handleSendMail = async (d: any, type: string) => {
     myOAuth2Client.setCredentials({
         refresh_token: GOOGLE_MAILER_REFRESH_TOKEN,
     });
-    const sendMail = async (): Promise<Responses> => {
-        let qr = type === 'qr' ? await QRCode.toDataURL(`${d.id}`) : '';
+    const sendMail = async (value: any): Promise<Responses> => {
+        let qr = type === 'qr' ? await generateQRCode(`${value.id}`) : '';
         try {
             // Lấy thông tin gửi lên từ client qua body
             const myAccessTokenObject = await myOAuth2Client.getAccessToken();
@@ -50,8 +59,9 @@ export const handleSendMail = async (d: any, type: string) => {
             jsonResult = type === 'qr' ? { ...jsonResult, data: { idTicket: d.id } } : jsonResult
             return jsonResult as Responses
         } catch (error: any) {
+            console.log(error);
             return { status: 500, message: error.message }
         }
     };
-    return sendMail();
+    return sendMail(d);
 };

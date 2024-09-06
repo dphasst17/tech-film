@@ -35,6 +35,7 @@ export class AppModule {
         { path: 'api/user', method: RequestMethod.GET },
         { path: 'api/user', method: RequestMethod.PUT },
         { path: 'api/ticket/user', method: RequestMethod.GET },
+        { path: 'api/ticket/', method: RequestMethod.POST },
         { path: 'api/token', method: RequestMethod.GET },
         { path: 'api/auth/token', method: RequestMethod.GET },
       );
