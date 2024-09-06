@@ -73,8 +73,11 @@ export class AuthService {
         }
         return { status: 201, message: 'Register success' }
     }
-    async updateAuth(idUser: string, data: { [key: string]: string | number | boolean | any }) {
-        const updated = await this.authService.findByIdAndUpdate({ idUser: idUser }, data)
+    async updateAuth(idUser: string, data: { current: string, password: string }) {
+        const getData = await this.authRepository.login(idUser)
+        const isPassword = this.decodePass(data.current, getData[0].password)
+        if (!isPassword) { return { status: 403, message: 'Incorrect password' } }
+        const updated = await this.authService.findOneAndUpdate({ idUser: idUser }, { password: this.encodePass(data.password) })
         return updated ? { status: 200, message: 'Update auth success' } : { status: 404, message: 'Auth not found' }
     }
     async getNewToken(idUser: string): Promise<Responses> {

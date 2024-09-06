@@ -38,6 +38,7 @@ export class AppModule {
         { path: 'api/ticket/', method: RequestMethod.POST },
         { path: 'api/token', method: RequestMethod.GET },
         { path: 'api/auth/token', method: RequestMethod.GET },
+        { path: 'api/auth/password', method: RequestMethod.PUT },
       );
     consumer
       .apply(JwtAdminAuthMiddleware)

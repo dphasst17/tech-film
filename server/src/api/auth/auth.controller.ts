@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Put, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthRequest, AuthResponse } from 'src/interfaces/auth.interface';
 import { RequestCustom, Responses } from 'src/interfaces/request.interface';
@@ -26,5 +26,11 @@ export class AuthController {
         const idUser = req.idUser
         const token = await this.authService.getNewToken(idUser)
         return res.status(token.status).json(token)
+    }
+    @Put('/password')
+    async updateAuth(@Req() req: RequestCustom, @Body() data: { current: string, password: string }, @Res() res: Response): Promise<Response> {
+        const idUser = req.idUser
+        const auth = await this.authService.updateAuth(idUser, data)
+        return res.status(auth.status).json(auth)
     }
 }

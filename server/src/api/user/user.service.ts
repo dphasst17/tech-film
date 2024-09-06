@@ -29,6 +29,14 @@ export class UserService {
     }
 
     async update(id: string, data: { [key: string]: string | number | boolean | any }): Promise<Responses> {
+        if (data.email) {
+            const isEmail = await this.userRepository.finData('email', data.email)
+            if (isEmail.length !== 0) return { status: 403, message: 'Email already exists' }
+        }
+        if (data.phone) {
+            const isPhone = await this.userRepository.finData('phone', data.phone)
+            if (isPhone.length !== 0) return { status: 403, message: 'Phone already exists' }
+        }
         const dataUpdate = await this.userRepository.update(id, data)
         if (!dataUpdate) return { status: 404, message: 'Update user failed' }
         return { status: 200, message: 'Update user success' }

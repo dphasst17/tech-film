@@ -12,6 +12,9 @@ export class UserRepository {
         return await this.user.find({ idUser: id }).exec();
     }
 
+    async finData(key: string, value: string): Promise<UserResponse[]> {
+        return await this.user.find({ ['key']: value }).exec();
+    }
     async findAll(): Promise<UserResponse[]> {
         return await this.user.find().exec();
     }
@@ -21,7 +24,7 @@ export class UserRepository {
     }
 
     async update(id: string, data: { [key: string]: string | number | boolean | any }): Promise<User> {
-        return await this.user.findByIdAndUpdate({ idUser: id }, data).exec();
+        return await this.user.findOneAndUpdate({ idUser: id }, data).exec();
     }
 
     async delete(id: string): Promise<User> {
