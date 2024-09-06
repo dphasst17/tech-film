@@ -9,7 +9,6 @@ import Seat from './seat'
 import { formatDate } from '@/utils/util'
 import { StateContext } from '@/contexts/state'
 import { accountStore } from '@/store/account'
-import { register } from '../../../../../api/auth';
 import { useForm } from 'react-hook-form'
 import Payment from './paypal'
 import { toast } from 'react-toastify'
@@ -29,7 +28,10 @@ const IndexDetail = () => {
     const [dateArray, setDateArray] = useState([]);
     const [isPaypal, setIsPaypal] = useState(false);
     const [price, setPrice] = useState(0)
-    const [stateForm, setStateForm] = useState({ info: { name: '', email: '', phone: '' }, timeFrame: 0, date: '', count: 1, idFilm: params.id[0], orderId: '' })
+    const [stateForm, setStateForm] = useState({
+        name: '', email: '', phone: '', timeFrame: 0, created_at: '', date: '', count: 1,
+        price: 0, idFilm: '', orderId: '', isConfirm: false
+    })
     const keyDetail = ['director', 'cast', 'release', 'time']
     const inputValue = ['name', 'email', 'phone']
     useEffect(() => {
@@ -38,14 +40,12 @@ const IndexDetail = () => {
         const startDate = new Date(releaseDate);
         startDate.setDate(startDate.getDate() - 30)
         const currentDate = new Date();
-
         const isWithinPurchaseRange = currentDate.getTime() >= startDate.getTime() && currentDate.getTime() <= releaseDate.getTime();
         setShowTicket(isWithinPurchaseRange)
         document.title = "Film Detail"
         result && setData(result)
         data && (document.title = data[0].title)
     }, [params, result, data])
-
     useEffect(() => {
         if (data) {
             const filmDetail: FilmDetailType[] = data
@@ -65,7 +65,7 @@ const IndexDetail = () => {
         users && setPrice(users.map(u => u.point).toString() === '20' ? 1 : 3)
 
     }, [data, users])
-    const onSubmit = (data: any) => {
+    const onSubmit = (value: any) => {
         if (time === 0) {
             toast.error('Please select a time frame!')
             return
@@ -74,7 +74,11 @@ const IndexDetail = () => {
             toast.error('Please select a date!')
             return
         }
-        setStateForm({ info: { name: data.name, email: data.email, phone: data.phone }, timeFrame: time, date: day, count: 1, idFilm: params?.id[0], orderId: '' })
+        data && setStateForm({
+            name: value.name, email: value.email, phone: value.phone, timeFrame: time,
+            created_at: formatDate(new Date().toISOString().split("T")[0]), price: price,
+            date: day, count: 1, idFilm: data[0].id, orderId: '', isConfirm: false
+        })
         setIsPaypal(true)
     }
     return <div className="relative detailFilm w-full h-auto pt-10 ">
@@ -97,7 +101,7 @@ const IndexDetail = () => {
                 <span className="font-sc-thin w-full h-auto text-center font-tech-shark text-7xl font-extrabold text-white my-6">{d.title}</span>
                 <span className="font-sc-thin w-[90%] h-auto text-center text-[30px] font-extrabold mt-1 text-white bg-zinc-950 bg-opacity-60 p-5 rounded-md">{d.des}</span>
                 <div className="infoFilm w-full h-auto flex flex-wrap justify-center">
-                    {keyDetail.map((k: string) => <div className="item w-2/5 h-auto min-h-[50px] flex items-center bg-zinc-700 rounded-lg m-1 px-2">
+                    {keyDetail.map((k: string) => <div key={k} className="item w-2/5 h-auto min-h-[50px] flex items-center bg-zinc-700 rounded-lg m-1 px-2">
                         <span className="font-bold text-[20px] text-white">
                             {k.toUpperCase()}: <span className="font-bold text-[20px]">{k === 'release' ? formatDate(d[k]) : d[k]}</span>
                         </span>
@@ -127,7 +131,7 @@ const IndexDetail = () => {
                 <h1 className="w-full text-center font-sc-thin font-extrabold text-[40px] text-red-600 my-4">Form</h1>
                 <div className="form w-3/5 h-auto mb-8 flex flex-wrap justify-evenly z-10">
                     {users && users.map(u => inputValue.map((i: string) =>
-                        <Input {...register(i, { required: true })} radius="sm" isInvalid={errors[i] ? true : false} type="text"
+                        <Input key={`input-${i}`} {...register(i, { required: true })} radius="sm" isInvalid={errors[i] ? true : false} type="text"
                             label={i.toUpperCase()} defaultValue={u[i]} className={`${i === 'email' ? 'w-2/5' : 'w-1/5'} mx-1`} />
                     ))}
                     <Input {...register('count', { required: true })} radius="sm" type="text" label="Ticket price" value={`${price}$`} className="w-[15%]" />

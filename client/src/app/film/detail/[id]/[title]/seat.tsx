@@ -4,18 +4,21 @@ import { Button, Tooltip } from "@nextui-org/react"
 import { useFetchDataByKey } from '@/hooks/useFetchData'
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
+import { getSeatDetail } from '@/api/ticket';
 let socket: any;
 const Seat = ({ props }: { props: any }) => {
     const key = { date: props.day, time: props.time.toString() }
-    const { data, err: errSeat } = useFetchDataByKey('ticket', 'getSeatDetail', key);
+    /* const { data, err: errSeat } = useFetchDataByKey('ticket', 'getSeatDetail', key); */
     const [seatData, setSeatData] = useState<string[]>([])
     const [seatFocus, setSeatFocus] = useState<string[]>([])
     const [userSelect, setUserSelect] = useState<string>("")
     const col = ['a', 'b', 'c', 'd', 'e', 'f']
     const row = [1, 2, 3, 4, 5, 6, 7]
     useEffect(() => {
-        data && setSeatData(data)
-    }, [data])
+        getSeatDetail(key).then(res => {
+            if (res.status === 200) setSeatData(res.data)
+        })
+    }, [])
     useEffect(() => {
         // Kết nối đến server
         if (!socket) {

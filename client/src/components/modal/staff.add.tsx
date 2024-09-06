@@ -58,7 +58,7 @@ const AddStaff = ({ onClose, setModalName }: { onClose: () => void, setModalName
                 </Button>
                 <div className='grid grid-cols-2 gap-2 h-[400px] overflow-y-auto'>
                     {
-                        count.map((c: number) => <div className={`item-${c}`}>
+                        count.map((c: number) => <div key={`item-${c}`} className={`item-${c}`}>
                             <div className='w-full grid grid-cols-2 mb-4 items-center justify-between'>
                                 <span className='col-span-1'>#Staff {c}</span>
                                 <div className='flex justify-end pr-6'>

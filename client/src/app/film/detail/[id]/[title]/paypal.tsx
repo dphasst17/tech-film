@@ -4,40 +4,24 @@ import { accountStore } from "@/store/account";
 import { getToken } from "@/utils/cookie";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { use } from "react";
+import { toast } from "react-toastify";
 
 const Payment = ({ props }: { props: any }) => {
     /* const { setIsLoading, user, setUser } = use(StateContext) */
     const { users: user } = accountStore()
     const handleApprove = (data: any, actions: any) => {
         return actions.order.capture().then(async (details: any) => {
-            console.log(data.orderID)
             props.setStateForm((prevState: any) => ({ ...prevState, 'orderId': data.orderID }))
             const resultData = { ...props.stateForm, 'orderId': data.orderID, seat: props.seat.toUpperCase() }
             const token = await getToken()
             createTicket(token, resultData).then(res => {
                 if (res.status === 200) {
-                    /* setUser(user.map(u => {
-                        return {
-                            ...u,
-                            ticket: [
-                                {
-                                    title: props.title,
-                                    idTicket: res.idTicket,
-                                    idFilm: props.stateForm.idFilm,
-                                    date: props.stateForm.date,
-                                    timeFrame: props.stateForm.timeFrame,
-                                    background: props.background,
-                                    thumbnails: props.thumbnails
-                                },
-                                ...u.ticket
-                            ]
-                        }
-                    })) */
-                    console.log(res.idTicket)
-                    console.log(user)
-                    console.log(props.stateForm)
+                    toast.success('Buy ticket is success! Please check your email');
                     alert('Buy ticket is success! Please check your email');
                     props.setIsPaypal(false)
+                }
+                else {
+                    toast.error(res.message)
                 }
             })
         });
