@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { SocketClass } from 'src/sockets/socket';
 import { TicketRepository } from './ticket.repository';
 import { FilmSchema } from 'src/schemas/film.schema';
+import { UserSchema } from 'src/schemas/user.schema';
 
 @Module({
   providers: [TicketService, SocketClass, TicketRepository],
@@ -13,6 +14,7 @@ import { FilmSchema } from 'src/schemas/film.schema';
   imports: [
     MongooseModule.forFeature([{ name: 'ticket', schema: TicketSchema }]),
     MongooseModule.forFeature([{ name: 'film', schema: FilmSchema }]),
+    MongooseModule.forFeature([{ name: 'user', schema: UserSchema }]),
   ],
   exports: [TicketService],
 })

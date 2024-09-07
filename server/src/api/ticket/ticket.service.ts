@@ -44,8 +44,8 @@ export class TicketService {
     }
     async create(idUser: string, data: TicketCreate) {
         const id = this.randomString(4);
-        data.id = id
         data.idUser = idUser
+        data.idTicket = `${data.idFilm}-${id}`
         const insertData = await this.ticketRepository.create(data)
         const infoTicket = {
             toMail: data.email,
@@ -70,7 +70,8 @@ export class TicketService {
     }
     async update(id: string, data: { [x: string]: string | number | boolean | number[] }): Promise<Responses> {
         const update = await this.ticketRepository.update(id, data)
-        return update ? { status: 200, data: update } : { status: 404, message: 'Update ticket fail' }
+        return update ? { status: 200, message: data.isConfirm ? 'Confirm ticket success' : 'Update ticket success' }
+            : { status: 404, message: data.isConfirm ? 'Confirm ticket fail' : 'Update ticket fail' }
     }
 
     async delete(id: string): Promise<Responses> {

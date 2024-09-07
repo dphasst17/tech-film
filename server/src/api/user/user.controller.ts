@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Put, Request, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put, Query, Request, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RequestCustom } from 'src/interfaces/request.interface';
 import { Response } from 'express';
@@ -7,8 +7,8 @@ import { Response } from 'express';
 export class UserController {
     constructor(private readonly userService: UserService) { }
     @Get('all')
-    async index(@Res() res: Response): Promise<Response> {
-        const data = await this.userService.findAll()
+    async index(@Res() res: Response, @Query('page') page: string = '1', @Query('limit') limit: string = '10'): Promise<Response> {
+        const data = await this.userService.findAll(page, limit)
         return res.status(data.status).json(data);
     }
     @Get()

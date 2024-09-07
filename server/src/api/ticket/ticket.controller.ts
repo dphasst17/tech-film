@@ -31,8 +31,8 @@ export class TicketController {
         return res.status(data.status).json(data);
     }
     @Put()
-    async update(@Body('id') id: string, @Body() data: { [x: string]: string | number | boolean | number[] }, @Res() res: Response): Promise<Response> {
-        const updated = await this.ticketService.update(id, data)
+    async update(@Body() data: { id: string, detail: { [x: string]: string | number | boolean | number[] } }, @Res() res: Response): Promise<Response> {
+        const updated = await this.ticketService.update(data.id!, data.detail)
         return res.status(updated.status).json(updated);
     }
 }

@@ -2,11 +2,13 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Film } from "src/schemas/film.schema";
 import { Ticket } from "src/schemas/ticket.schema";
+import { User } from "src/schemas/user.schema";
 
 export class TicketRepository {
     constructor(
         @InjectModel('ticket') private readonly ticket: Model<Ticket>,
         @InjectModel('film') private readonly film: Model<Film>,
+        @InjectModel('user') private readonly user: Model<User>,
     ) { }
     async create(data: { [key: string]: string | number | boolean | any }): Promise<Film[]> {
         const create_data = await this.ticket.create(data);
@@ -14,8 +16,11 @@ export class TicketRepository {
         const getFilm = await this.film.find({ id: data.idFilm })
         return getFilm
     }
-    async update(id: string, data: { [key: string]: string | number | boolean | any }): Promise<Ticket> {
-        return await this.ticket.findByIdAndUpdate(id, data, { new: true });
+    async update(id: string, data: { [key: string]: string | number | boolean | any }): Promise<boolean> {
+        const updateTicket = await this.ticket.findOneAndUpdate({ idTicket: id }, data, { new: true, projection: { _id: 1, idUser: 1 } });
+        if (!updateTicket) throw new Error('Update ticket fail')
+        const updatePoint = await this.user.findOneAndUpdate({ idUser: updateTicket.idUser }, { $inc: { point: 1 } }, { new: true });
+        return updatePoint ? true : false
     }
     async findOne(id: string): Promise<Ticket[]> {
         return await this.ticket.find({ _id: id });

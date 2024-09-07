@@ -46,6 +46,7 @@ export class AppModule {
         { path: 'api/film', method: RequestMethod.POST },
         { path: 'api/film/:id', method: RequestMethod.PUT },
         { path: 'api/user/all', method: RequestMethod.GET },
+        { path: 'api/staff/all', method: RequestMethod.GET },
         { path: 'api/statis/film', method: RequestMethod.GET },
         { path: 'api/statis/user', method: RequestMethod.GET },
       )

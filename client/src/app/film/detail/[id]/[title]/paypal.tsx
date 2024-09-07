@@ -17,7 +17,6 @@ const Payment = ({ props }: { props: any }) => {
             createTicket(token, resultData).then(res => {
                 if (res.status === 200) {
                     toast.success('Buy ticket is success! Please check your email');
-                    alert('Buy ticket is success! Please check your email');
                     props.setIsPaypal(false)
                 }
                 else {

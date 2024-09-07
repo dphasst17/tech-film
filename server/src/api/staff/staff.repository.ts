@@ -9,7 +9,47 @@ export class StaffRepository {
         @InjectModel('user') private readonly user: Model<User>,
         @InjectModel('auth') private readonly auth: Model<Auth>,
     ) { }
+    async countData(): Promise<number> {
+        return await this.auth.countDocuments({ role: 1 }).exec();
+    }
 
+    async findAll(page: string, limit: string): Promise<UserResponse[]> {
+        const findData = await this.user.aggregate([
+            {
+                $lookup: {
+                    from: "auth",
+                    localField: "idUser",
+                    foreignField: "idUser",
+                    as: "auth"
+                }
+            },
+            {
+                $match: {
+                    "auth.role": 1
+                }
+            },
+            {
+                $skip: (parseInt(page) - 1) * parseInt(limit)
+            },
+            {
+                $limit: parseInt(limit)
+            },
+            {
+                $project: {
+                    _id: 1,
+                    idUser: 1,
+                    name: 1,
+                    email: 1,
+                    phone: 1,
+                    point: 1,
+                    action: 1,
+                    created_at: 1
+                }
+            }
+
+        ])
+        return findData
+    }
     async getStaff(): Promise<UserResponse[]> {
         return await this.auth.aggregate([
             {

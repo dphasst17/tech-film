@@ -4,16 +4,19 @@ import { filmStore } from "@/store/film";
 import { createContext, use, useEffect } from "react";
 import { StateContext } from "./state";
 import { getToken } from "@/utils/cookie";
-import { getUserData } from "@/api/user";
+import { getAllUser, getUserData } from "@/api/user";
 import { accountStore } from "@/store/account";
 import { getTicketByUser } from "@/api/ticket";
 import { statisFilm, statisUser } from "@/api/statis";
 import { StatisState } from "@/types/statis";
+import { staffGetAll } from "@/api/staff";
+import { customerStore } from "@/store/customer";
 
 export const ApiContext = createContext<any>({});
 export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     const { isLog, role, setStatis } = use(StateContext)
     const { setUsers, setTicket } = accountStore()
+    const { setStaff, setUser } = customerStore()
     const { setFilms, setNewFilm } = filmStore()
     const { data: dataNewFilm } = useFetchData('film', 'getNewFilm')
     const { data: dataFilms } = useFetchData('film', 'getFilms')
@@ -49,6 +52,20 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
                             .then(res => {
                                 if (res.status === 200) {
                                     setStatis((prev: StatisState) => ({ ...prev, film: res.data }))
+                                }
+                            })
+                    ),
+                    role === 0 && (
+                        staffGetAll(token)
+                            .then(res => {
+                                if (res.status === 200) {
+                                    setStaff(res.data)
+                                }
+                            }),
+                        getAllUser(token)
+                            .then(res => {
+                                if (res.status === 200) {
+                                    setUser(res.data)
                                 }
                             })
                     )

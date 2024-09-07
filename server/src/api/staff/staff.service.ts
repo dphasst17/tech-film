@@ -20,4 +20,20 @@ export class StaffService {
     async create(dataAuth: StaffAuthCreate[], dataStaff: StaffInfoCreate[]): Promise<Responses> {
         return handleFindData(this.staffRepository.create(dataAuth, dataStaff), 201)
     }
+    async getAll(page: string, limit: string): Promise<Responses> {
+        const countData = await this.staffRepository.countData()
+        const data = await this.staffRepository.findAll(page, limit)
+        if (!data) {
+            return { status: 404, message: 'Staff not found' }
+        }
+        return {
+            status: 200, data: {
+                total: countData,
+                totalPage: Math.ceil(data.length / parseInt(limit)),
+                limit: parseInt(limit),
+                page: parseInt(page),
+                detail: data
+            }
+        }
+    }
 }

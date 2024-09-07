@@ -41,12 +41,12 @@ export const createTicket = async (token: string, data: { [x: string]: string | 
         .then(res => res.json())
 }
 export const updateStatusSeat = async (id: string, data: { [x: string]: string | number | boolean | number[] }) => {
-    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/ticket/${id}`, {
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/ticket`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ id: id, detail: data })
     })
         .then(res => res.json())
 }

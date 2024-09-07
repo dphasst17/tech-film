@@ -20,7 +20,13 @@ export const updateUser = async (token: string, data: { [x: string]: string | nu
     })
         .then(res => res.json())
 }
-export const getAllUser = async () => {
-    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/all`)
+export const getAllUser = async (token: string) => {
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/user/all`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
         .then(res => res.json())
 }

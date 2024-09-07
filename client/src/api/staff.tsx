@@ -32,3 +32,13 @@ export const getStaffDetail = async (token: string, id: string) => {
     })
         .then(res => res.json())
 }
+export const staffGetAll = async (token: string) => {
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/staff/all`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(res => res.json())
+}

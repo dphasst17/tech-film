@@ -44,10 +44,6 @@ const Header = () => {
             url: '/film'
         },
         {
-            name: 'About',
-            url: '/about'
-        },
-        {
             name: 'Contact',
             url: '/contact'
         }
@@ -56,6 +52,10 @@ const Header = () => {
         {
             name: 'Admin',
             url: '/admin'
+        },
+        {
+            name: 'Scan QR',
+            url: '/qr'
         }
     ]
     return (

@@ -1,6 +1,6 @@
 export interface Ticket {
     _id?: string
-    id: string
+    idTicket: string
     idUser: string
     name: string
     phone: string
