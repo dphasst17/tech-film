@@ -31,6 +31,9 @@ export class FilmService {
     async findNew(): Promise<Responses> {
         return handleFindData(this.filmRepository.findNew())
     }
+    async findShowing(): Promise<Responses> {
+        return handleFindData(this.filmRepository.findShowing())
+    }
     async search(key: string, page: string, limit: string): Promise<Responses> {
         const countData = await this.filmRepository.countData(key)
         const data = await this.filmRepository.search(key, page, limit)

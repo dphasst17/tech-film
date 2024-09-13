@@ -22,6 +22,11 @@ export class FilmController {
         const result = await this.filmService.findNew()
         return res.status(result.status).json(result)
     }
+    @Get('showing')
+    async showing(@Res() res: Response): Promise<Response> {
+        const result = await this.filmService.findShowing()
+        return res.status(result.status).json(result)
+    }
     @Get('search/:key')
     async search(@Query('page') page: string = '1', @Query('limit') limit: string = '10', @Param('key') key: string, @Res() res: Response): Promise<Response> {
         const data = await this.filmService.search(key, page, limit)

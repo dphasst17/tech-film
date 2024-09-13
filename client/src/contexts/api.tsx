@@ -17,13 +17,15 @@ export const ApiProvider = ({ children }: { children: React.ReactNode }) => {
     const { isLog, role, setStatis } = use(StateContext)
     const { setUsers, setTicket } = accountStore()
     const { setStaff, setUser } = customerStore()
-    const { setFilms, setNewFilm } = filmStore()
+    const { setFilms, setNewFilm, setShowing } = filmStore()
     const { data: dataNewFilm } = useFetchData('film', 'getNewFilm')
     const { data: dataFilms } = useFetchData('film', 'getFilms')
+    const { data: dataShowing } = useFetchData('film', 'getShowingFilm')
     useEffect(() => {
         dataNewFilm && setNewFilm(dataNewFilm)
         dataFilms && setFilms(dataFilms)
-    }, [dataNewFilm, dataFilms, setNewFilm, setFilms])
+        dataShowing && setShowing(dataShowing)
+    }, [dataNewFilm, dataFilms, dataShowing, setNewFilm, setFilms, setShowing])
     useEffect(() => {
         if (isLog) {
             const fetchData = async () => {

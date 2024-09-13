@@ -14,6 +14,10 @@ export const getNewFilm = async () => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film/new`)
         .then(res => res.json())
 }
+export const getShowingFilm = async () => {
+    return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film/showing`)
+        .then(res => res.json())
+}
 export const createFilm = async (token: string, data: DataInsert) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film`, {
         method: 'POST',
@@ -24,11 +28,12 @@ export const createFilm = async (token: string, data: DataInsert) => {
         body: JSON.stringify(data)
     }).then(res => res.json())
 }
-export const updateFilm = async (id: string, data: any/* FilmUpdate */) => {
+export const updateFilm = async (token: string, id: string, data: any) => {
     return fetch(`${process.env.NEXT_PUBLIC_URL}/api/film/${id}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data)
     }).then(res => res.json())

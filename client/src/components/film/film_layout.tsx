@@ -7,7 +7,7 @@ import { Modal, useDisclosure } from '@nextui-org/react'
 import EditFilm from '../modal/film.edit'
 
 const FilmLayout = ({ data, key, type, ...props }: { data: FilmDetailType, key: string, type?: 'user' | 'admin', props?: any }) => {
-    const { onOpen, isOpen, onOpenChange } = useDisclosure()
+    const { onOpen, isOpen, onOpenChange, onClose } = useDisclosure()
     const router = useRouter()
     const handleNavigate = (url: string) => {
         router.push(url)
@@ -37,8 +37,8 @@ const FilmLayout = ({ data, key, type, ...props }: { data: FilmDetailType, key: 
                 <span className='text-center text-3xl font-bold text-white z-10'>{formatDate(data.release)}</span>
             </div>
         </div>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-            <EditFilm />
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl'>
+            <EditFilm idFilm={data._id!} onClose={onClose} />
         </Modal>
     </div>
 }

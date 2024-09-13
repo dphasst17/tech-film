@@ -21,7 +21,18 @@ export class FilmRepository {
     async findNew(): Promise<Film[]> {
         return await this.film.find().sort({ release: -1 }).limit(10).exec()
     }
-
+    //find film is showing
+    async findShowing(): Promise<Film[]> {
+        const currentDate = new Date();
+        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+        const data = await this.film.find({
+            release: {
+                $gte: firstDayOfYear.toISOString().split('T')[0],
+                $lte: currentDate.toISOString().split('T')[0]
+            },
+        }).sort({ release: -1 }).exec()
+        return data
+    }
     async search(key: string, page: string, limit: string): Promise<Film[]> {
         return await this.film.find({ title: new RegExp(key, 'i') }).sort({ release: -1 }).limit(parseInt(limit)).skip((parseInt(page) - 1) * parseInt(limit)).exec()
     }

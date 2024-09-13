@@ -36,11 +36,10 @@ const IndexDetail = () => {
     const inputValue = ['name', 'email', 'phone']
     useEffect(() => {
         const film: FilmDetailType[] | [] = result ?? []
-        const releaseDate = new Date(film[0]?.release); // Chuyển đổi chuỗi 'release' thành Date
-        const startDate = new Date(releaseDate);
-        startDate.setDate(startDate.getDate() - 30)
         const currentDate = new Date();
-        const isWithinPurchaseRange = currentDate.getTime() >= startDate.getTime() && currentDate.getTime() <= releaseDate.getTime();
+        const releaseDate = new Date(film[0]?.release);
+        const firstDayOfYear = new Date(currentDate.getFullYear(), 0, 1);
+        const isWithinPurchaseRange = releaseDate.getTime() >= firstDayOfYear.getTime() && releaseDate.getTime() <= currentDate.getTime();
         setShowTicket(isWithinPurchaseRange)
         document.title = "Film Detail"
         result && setData(result)
@@ -48,17 +47,18 @@ const IndexDetail = () => {
     }, [params, result, data])
     useEffect(() => {
         if (data) {
-            const filmDetail: FilmDetailType[] = data
-            let releaseDate = new Date(data[0].release);
-            const startDate = new Date(data[0].release);
-            startDate.setDate(startDate.getDate() - 30)
+            const filmDetail: FilmDetailType[] = data;
             const currentDate = new Date();
             let tempDateArray = [];
-            while (currentDate.getTime() >= startDate.getTime() && currentDate.getTime() <= releaseDate.getTime()) {
+
+            // Lấy ngày đặt vé từ ngày hiện tại đến 20 ngày sau
+            for (let i = 0; i < 20; i++) {
                 currentDate.setDate(currentDate.getDate() + 1);
                 tempDateArray.push((new Date(currentDate)).toISOString().split("T")[0].split("-").reverse().join("/"));
             }
+
             setDateArray(tempDateArray as any);
+
 
             setUrlBackground(filmDetail[0].background)
         }
