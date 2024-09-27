@@ -14,6 +14,6 @@ async function server() {
     credentials: true,
   });
   setTimeout(() => { console.log(mongoose.connection.readyState); }, 5000)
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 3001);
 }
 server();
